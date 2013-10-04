@@ -1,0 +1,13 @@
+.icon-twitter {
+	width: 36px;
+	height: 36px;
+    background-image: url('/tmp/multiple_imports.png');
+    background-position: -0px -66px;
+}
+
+.icon-square {
+	width: 64px;
+	height: 64px;
+    background-image: url('/tmp/multiple_imports.png');
+    background-position: -0px -0px;
+}

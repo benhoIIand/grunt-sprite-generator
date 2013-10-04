@@ -29,36 +29,39 @@ module.exports = function(grunt) {
         var done = this.async();
 
         // Collect all background-image references in a given file
-        var collectImages = function(srcFile) {
+        var collectImages = function(files) {
             var images = [];
-            var data = grunt.file.read(options.baseUrl + srcFile);
+            var found = false;
 
+            files.forEach(function(srcFile) {
+                var data = grunt.file.read(options.baseUrl + srcFile);
+                var references = data.match(imageRegex);
 
-            var files = data.match(imageRegex);
+                references.forEach(function(file) {
+                    // Exit if it contains a http/https
+                    if (httpRegex.test(file)) {
+                        grunt.verbose.warn(file + ' has been skipped as it\'s an external resource!');
+                        return false;
+                    }
 
-            files.forEach(function(file) {
-                // Exit if it contains a http/https
-                if (httpRegex.test(file)) {
-                    grunt.log.warn(file + ' has been skipped as it\'s an external resource!');
-                    return false;
-                }
+                    // Exit if not a PNG
+                    if (!/\.png/.test(file)) {
+                        grunt.verbose.warn(file + ' has been skipped as it\'s not a PNG!');
+                        return false;
+                    }
 
-                // Exit if not a PNG
-                if (!/\.png/.test(file)) {
-                    grunt.log.warn(file + ' has been skipped as it\'s not a PNG!');
-                    return false;
-                }
+                    var filepath = options.baseUrl + file.match(filepathRegex)[0].replace(/['"]/g, '');
 
-                var filepath = options.baseUrl + file.match(filepathRegex)[0].replace(/['"]/g, '');
-
-                if (grunt.file.exists(filepath)) {
-                    images[filepath] = file;
-                } else {
-                    grunt.log.warn(filepath + ' has been skipped as it does not exist!');
-                }
+                    if (grunt.file.exists(filepath)) {
+                        images[filepath] = file;
+                        found = true;
+                    } else {
+                        grunt.verbose.warn(filepath + ' has been skipped as it does not exist!');
+                    }
+                });
             });
 
-            return images;
+            return found ? images : found;
         };
 
         var spriteSmithWrapper = function(config, callback) {
@@ -117,6 +120,10 @@ module.exports = function(grunt) {
             var fileDest = file.dest;
             options.dest = options.baseUrl + fileDest;
 
+            if(file.src.length < 1) {
+                grunt.fatal('No source files were found');
+            }
+
             var src = file.src.filter(function(filepath) {
                 // Warn on and remove invalid source files (if nonull was set).
                 if (!grunt.file.exists(filepath)) {
@@ -129,6 +136,12 @@ module.exports = function(grunt) {
 
             // Process starter
             var collection = collectImages(src);
+
+            if(!collection) {
+                grunt.log.warn('No images were found so a sprite was not generated');
+                done();
+                return false;
+            }
 
             grunt.util.async.map([{
                 src: grunt.util._.keys(collection)

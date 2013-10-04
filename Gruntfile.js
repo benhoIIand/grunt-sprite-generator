@@ -40,6 +40,12 @@ module.exports = function(grunt) {
                 files: {
                     '/tmp/default_options.png': ['tmp/default_options.css']
                 }
+            },
+            multiple_imports: {
+                options: {},
+                files: {
+                    '/tmp/multiple_imports.png': ['tmp/multiple_imports_1.css', 'tmp/multiple_imports_2.css']
+                }
             }
         },
 
@@ -63,7 +69,7 @@ module.exports = function(grunt) {
     // plugin's task(s), then test the result.
     grunt.registerTask('test', ['clean', 'copy', 'spriteGenerator', 'nodeunit']);
 
-    grunt.registerTask('run', ['clean', 'copy', 'spriteGenerator']);
+    grunt.registerTask('run', ['clean', 'copy', 'spriteGenerator:multiple_imports']);
 
     // By default, lint and run all tests.
     grunt.registerTask('default', ['jshint', 'test']);

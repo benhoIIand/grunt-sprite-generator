@@ -43,6 +43,26 @@ exports.spriteGenerator = {
     test.equal(actual, expected, 'should generate and replace the correct css properties.');
 
     test.done();
+  },
+
+  multiple_imports: function(test) {
+    test.expect(3);
+
+    var actual, expected;
+
+    actual = grunt.file.read('tmp/multiple_imports.png');
+    expected = grunt.file.read('test/expected/multiple_imports.png');
+    test.equal(actual, expected, 'should generate a sprite from the default options.');
+
+    actual = grunt.file.read('tmp/multiple_imports_1.css');
+    expected = grunt.file.read('test/expected/multiple_imports_1.css');
+    test.equal(actual, expected, 'should generate and replace the correct css properties.');
+
+    actual = grunt.file.read('tmp/multiple_imports_2.css');
+    expected = grunt.file.read('test/expected/multiple_imports_2.css');
+    test.equal(actual, expected, 'should generate and replace the correct css properties.');
+
+    test.done();
   }
 
 };

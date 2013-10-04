@@ -1,0 +1,13 @@
+.icon-facebook {
+	width: 32px;
+	height: 32px;
+    background-image: url('/tmp/multiple_imports.png');
+    background-position: -38px -66px;
+}
+
+.icon-opentable {
+	width: 220px;
+	height: 43px;
+    background-image: url('/tmp/multiple_imports.png');
+    background-position: -66px -0px;
+}

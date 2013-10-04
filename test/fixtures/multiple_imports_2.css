@@ -1,0 +1,11 @@
+.icon-twitter {
+	width: 36px;
+	height: 36px;
+    background-image: url("/test/fixtures/twitter.png");
+}
+
+.icon-square {
+	width: 64px;
+	height: 64px;
+    background-image: url(/test/fixtures/square.png);
+}

@@ -1,0 +1,11 @@
+.icon-facebook {
+	width: 32px;
+	height: 32px;
+    background-image: url('/test/fixtures/facebook.png');
+}
+
+.icon-opentable {
+	width: 220px;
+	height: 43px;
+    background-image: url("/test/fixtures/opentable.png");
+}
