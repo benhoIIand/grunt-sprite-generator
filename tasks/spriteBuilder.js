@@ -1,6 +1,6 @@
 /*
- * grunt-sprite-builder
- * http://github.com/hollandben/grunt-sprite-builder
+ * grunt-sprite-generator
+ * http://github.com/hollandben/grunt-sprite-generator
  *
  * Copyright (c) 2013 Ben Holland
  * Licensed under the MIT license.
@@ -15,7 +15,7 @@ module.exports = function(grunt) {
     var imageRegex = new RegExp('background-image:[\\s]?url\\(["\']?([\\w\\d\\s!:./\\-\\_]*\\.[\\w?#]+)["\']?\\)[^;]*\;', 'ig');
     var filepathRegex = new RegExp('["\']?([\\w\\d\\s!:./\\-\\_]*\\.[\\w?#]+)["\']?', 'ig');
 
-    grunt.registerMultiTask('spriteBuilder', 'Grunt task that generates a sprite from images referenced in a stylesheet and then updates the references with the new sprite image and positions', function() {
+    grunt.registerMultiTask('spriteGenerator', 'Grunt task that generates a sprite from images referenced in a stylesheet and then updates the references with the new sprite image and positions', function() {
 
         // Merge task-specific and/or target-specific options with these defaults.
         var options = this.options({

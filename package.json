@@ -1,22 +1,22 @@
 {
-  "name": "grunt-sprite-builder",
+  "name": "grunt-sprite-generator",
   "version": "0.0.1",
   "description": "Grunt task that generates a sprite from images referenced in a stylesheet and then updates the references with the new sprite image and positions",
   "author": "Ben Holland <hi@benholland.me>",
   "repository": {
     "type": "git",
-    "url": "https://github.com/hollandben/grunt-sprite-builder.git"
+    "url": "https://github.com/hollandben/grunt-sprite-generator.git"
   },
   "licenses": [
     {
       "type": "MIT",
-      "url": "https://github.com/hollandben/grunt-sprite-builder/blob/master/LICENSE-MIT"
+      "url": "https://github.com/hollandben/grunt-sprite-generator/blob/master/LICENSE-MIT"
     }
   ],
   "engines": {
     "node": ">= 0.8.0"
   },
-  "main": "tasks/grunt-sprite-builder.js",
+  "main": "tasks/grunt-sprite-generator.js",
   "dependencies": {
     "spritesmith": "0.10.0"
   },

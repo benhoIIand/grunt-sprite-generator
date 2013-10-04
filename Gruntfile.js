@@ -1,6 +1,6 @@
 /*
- * grunt-sprite-builder
- * http://github.com/hollandben/grunt-sprite-builder
+ * grunt-sprite-generator
+ * http://github.com/hollandben/grunt-sprite-generator
  *
  * Copyright (c) 2013 Ben Holland
  * Licensed under the MIT license.
@@ -34,7 +34,7 @@ module.exports = function(grunt) {
         },
 
         // Configuration to be run (and then tested).
-        spriteBuilder: {
+        spriteGenerator: {
             default_options: {
                 options: {},
                 files: {
@@ -61,9 +61,9 @@ module.exports = function(grunt) {
 
     // Whenever the "test" task is run, first clean the "tmp" dir, then run this
     // plugin's task(s), then test the result.
-    grunt.registerTask('test', ['clean', 'copy', 'spriteBuilder', 'nodeunit']);
+    grunt.registerTask('test', ['clean', 'copy', 'spriteGenerator', 'nodeunit']);
 
-    grunt.registerTask('run', ['clean', 'copy', 'spriteBuilder']);
+    grunt.registerTask('run', ['clean', 'copy', 'spriteGenerator']);
 
     // By default, lint and run all tests.
     grunt.registerTask('default', ['jshint', 'test']);

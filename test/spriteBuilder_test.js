@@ -22,7 +22,7 @@ var grunt = require('grunt');
     test.ifError(value)
 */
 
-exports.spriteBuilder = {
+exports.spriteGenerator = {
 
   setUp: function(done) {
     // setup here if necessary
