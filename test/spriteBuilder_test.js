@@ -30,11 +30,17 @@ exports.spriteBuilder = {
   },
 
   default_options: function(test) {
-    test.expect(1);
+    test.expect(2);
 
-    var actual = grunt.file.read('tmp/default-sprite.png');
-    var expected = grunt.file.read('test/expected/default-sprite.png');
-    test.equal(actual, expected, 'should describe what the default behavior is.');
+    var actual, expected;
+
+    actual = grunt.file.read('tmp/default_options.png');
+    expected = grunt.file.read('test/expected/default_options.png');
+    test.equal(actual, expected, 'should generate a sprite from the default options.');
+
+    actual = grunt.file.read('tmp/default_options.css');
+    expected = grunt.file.read('test/expected/default_options.css');
+    test.equal(actual, expected, 'should generate and replace the correct css properties.');
 
     test.done();
   }

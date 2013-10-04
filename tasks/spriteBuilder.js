@@ -52,10 +52,7 @@ module.exports = function(grunt) {
                 var filepath = options.baseUrl + file.match(filepathRegex)[0].replace(/['"]/g, '');
 
                 if (grunt.file.exists(filepath)) {
-                    images.push({
-                        ref: file,
-                        src: filepath
-                    });
+                    images[filepath] = file;
                 } else {
                     grunt.log.warn(filepath + ' has been skipped as it does not exist!');
                 }
@@ -65,7 +62,7 @@ module.exports = function(grunt) {
         };
 
         var spriteSmithWrapper = function(config, callback) {
-            var sprite = 'test-sprite.png';
+            var dest = options.dest;
             var defaultConfig = {
                 algorithm: options.algorithm,
                 engine: options.engine,
@@ -78,31 +75,48 @@ module.exports = function(grunt) {
             grunt.util._.defaults(config, defaultConfig);
 
             spritesmith(config, function(err, result) {
-                console.log('RESULT CAME BACK - FUCK YEAH!');
 
                 if (err) {
                     grunt.fatal(err);
                     return callback(err);
                 } else {
-                    grunt.file.write(sprite, result.image, {
+                    grunt.file.write(dest, result.image, {
                         encoding: 'binary'
                     });
 
-                    callback();
+                    var tmpResult = result.coordinates;
+                    var coords = [];
 
-                    //     var tmpResult = result.coordinates;
-                    //     console.log(tmpResult);
-                    //     for (var key in result.coordinates) {
-                    //         // var newKey = path.join(process.cwd(), key).toLowerCase();
-                    //         // imageReplaces[newKey] = tmpResult[key];
-                    //         // imageReplaces[newKey].sprite = path.join(process.cwd(), sprite);
-                    //     }
-                    //     callback(false);
+                    for(var key in tmpResult) {
+                        coords[key] = {
+                            x: tmpResult[key].x,
+                            y: tmpResult[key].y
+                        };
+                    }
+
+                    callback(false, coords);
                 }
             });
         };
 
+        var updateReferences = function(filepath, spritePath, arr, callback) {
+            var data = grunt.file.read(filepath);
+
+            arr.forEach(function(obj) {
+                var newRef = 'background-image: url(\''+ spritePath +'\');\n    background-position: -'+ obj.coords.x +'px -'+ obj.coords.y +'px;';
+                data = data.replace(obj.ref, newRef);
+            });
+
+            grunt.file.write(filepath, data);
+
+            // callback();
+        };
+
+
         this.files.forEach(function(file) {
+            var fileDest = file.dest;
+            options.dest = options.baseUrl + fileDest;
+
             var src = file.src.filter(function(filepath) {
                 // Warn on and remove invalid source files (if nonull was set).
                 if (!grunt.file.exists(filepath)) {
@@ -113,18 +127,34 @@ module.exports = function(grunt) {
                 }
             });
 
-            var collection = collectImages(src);
-            var images = collection.map(function(obj) {
-                return obj.src;
-            });
-
             // Process starter
-            grunt.util.async.forEach([{
-                src: images
-            }], spriteSmithWrapper, function(err) {
+            var collection = collectImages(src);
+
+            grunt.util.async.map([{
+                src: grunt.util._.keys(collection)
+            }], spriteSmithWrapper, function(err, results) {
                 if (err) {
                     console.log(err);
                 }
+
+                src.forEach(function(file) {
+                    var refs = [];
+
+                    results.forEach(function(result, i) {
+                        grunt.util._.keys(result).map(function(key) {
+                            refs.push({
+                                src: key,
+                                ref: collection[key],
+                                coords: {
+                                    x: result[key].x,
+                                    y: result[key].y
+                                }
+                            });
+                        });
+                    });
+
+                    updateReferences(file, fileDest, refs);
+                });
 
                 done();
             });

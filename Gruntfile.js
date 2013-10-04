@@ -24,12 +24,21 @@ module.exports = function(grunt) {
             tests: ['tmp']
         },
 
+        copy: {
+            tests: {
+                expand: true,
+                cwd: 'test/fixtures/',
+                src: '**',
+                dest: 'tmp/'
+            }
+        },
+
         // Configuration to be run (and then tested).
         spriteBuilder: {
             default_options: {
                 options: {},
                 files: {
-                    'tmp/test.png': ['test/fixtures/icons.css']
+                    '/tmp/default_options.png': ['tmp/default_options.css']
                 }
             }
         },
@@ -47,11 +56,14 @@ module.exports = function(grunt) {
     // These plugins provide necessary tasks.
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-clean');
+    grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-nodeunit');
 
     // Whenever the "test" task is run, first clean the "tmp" dir, then run this
     // plugin's task(s), then test the result.
-    grunt.registerTask('test', ['clean', 'spriteBuilder', 'nodeunit']);
+    grunt.registerTask('test', ['clean', 'copy', 'spriteBuilder', 'nodeunit']);
+
+    grunt.registerTask('run', ['clean', 'copy', 'spriteBuilder']);
 
     // By default, lint and run all tests.
     grunt.registerTask('default', ['jshint', 'test']);

@@ -1,0 +1,14 @@
+.icon-facebook {
+    background-image: url('/tmp/default_options.png');
+    background-position: -0px -66px;
+}
+
+.icon-twitter {
+    background-image: url('/tmp/default_options.png');
+    background-position: -66px -0px;
+}
+
+.icon-square {
+    background-image: url('/tmp/default_options.png');
+    background-position: -0px -0px;
+}

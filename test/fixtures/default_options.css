@@ -1,0 +1,11 @@
+.icon-facebook {
+    background-image: url('/test/fixtures/facebook.png');
+}
+
+.icon-twitter {
+    background-image: url("/test/fixtures/twitter.png");
+}
+
+.icon-square {
+    background-image: url(/test/fixtures/square.png);
+}
