@@ -35,20 +35,18 @@ module.exports = function(grunt) {
 
         // Configuration to be run (and then tested).
         spriteGenerator: {
+            options: {},
             default_options: {
-                options: {},
                 files: {
                     '/tmp/default_options.png': ['tmp/default_options.css']
                 }
             },
             absolute_path: {
-                options: {},
                 files: {
                     '/tmp/absolute_path.png': ['tmp/absolute_path.css']
                 }
             },
             multiple_imports: {
-                options: {},
                 files: {
                     '/tmp/multiple_imports.png': ['tmp/multiple_imports_1.css', 'tmp/multiple_imports_2.css']
                 }

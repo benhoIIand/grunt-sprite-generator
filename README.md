@@ -2,10 +2,10 @@
 
 > Grunt task that generates a sprite from images referenced in a stylesheet and then updates the references with the new sprite image and positions
 
-## Currently in DEVELOPMENT
+If you spot any problems or have questions, then please open a new issue :)
 
 ## Getting Started
-This plugin requires Grunt `0.4`
+This plugin requires Grunt `0.4` and PhantomJS
 
 If you haven't used [Grunt](http://gruntjs.com/) before, be sure to check out the [Getting Started](http://gruntjs.com/getting-started) guide, as it explains how to create a [Gruntfile](http://gruntjs.com/sample-gruntfile) as well as install and use Grunt plugins. Once you're familiar with that process, you may install this plugin with this command:
 
@@ -39,17 +39,17 @@ grunt.initConfig({
 
 ### Options
 
-#### options.separator
+#### options.algorithm
 Type: `String`
-Default value: `',  '`
+Default value: `binary-tree`
 
-A string value that is used to do something with whatever.
+A string value that is used to define the packing algorithm. The available options are: `top-down`, `diagonal`, `alt-diagonal`, `binary-tree`.
 
-#### options.punctuation
-Type: `String`
-Default value: `'.'`
+#### options.padding
+Type: `Number`
+Default value: `2`
 
-A string value that is used to do something else with whatever else.
+The padding used between images
 
 ### Usage Examples
 
@@ -61,7 +61,7 @@ grunt.initConfig({
   spriteGenerator: {
     options: {},
     files: {
-      'dest/default_options': ['src/testing', 'src/123'],
+      'dest/default_options.png': ['src/default_options.css']
     },
   },
 })
@@ -74,11 +74,11 @@ In this example, custom options are used to do something else with whatever else
 grunt.initConfig({
   spriteGenerator: {
     options: {
-      separator: ': ',
-      punctuation: ' !!!',
+      algorithm: 'binary-tree',
+      padding: 10
     },
     files: {
-      'dest/default_options': ['src/testing', 'src/123'],
+      'dest/default_options.png': ['src/default_options.css']
     },
   },
 })

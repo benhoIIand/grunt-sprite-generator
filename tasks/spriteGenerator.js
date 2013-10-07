@@ -23,8 +23,7 @@ module.exports = function(grunt) {
             algorithm: 'binary-tree',
             baseUrl: './',
             engine: 'auto',
-            padding: 2,
-            notFound: false
+            padding: 2
         });
 
         var done = this.async();
