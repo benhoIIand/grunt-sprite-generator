@@ -46,6 +46,14 @@ module.exports = function(grunt) {
                 files: {
                     '/tmp/multiple_imports.png': ['tmp/multiple_imports_1.css', 'tmp/multiple_imports_2.css']
                 }
+            },
+            algorithm: {
+                options: {
+                    algorithm: 'diagonal'
+                },
+                files: {
+                    '/tmp/algorithm_diagonal.png': ['tmp/algorithm_diagonal.css']
+                }
             }
         },
 

@@ -63,6 +63,22 @@ exports.spriteGenerator = {
     test.equal(actual, expected, 'should generate and replace the correct css properties.');
 
     test.done();
+  },
+
+  algorithm: function(test) {
+    test.expect(2);
+
+    var actual, expected;
+
+    actual = grunt.file.read('tmp/algorithm_diagonal.png');
+    expected = grunt.file.read('test/expected/algorithm_diagonal.png');
+    test.equal(actual, expected, 'should generate a sprite from the default options.');
+
+    actual = grunt.file.read('tmp/algorithm_diagonal.css');
+    expected = grunt.file.read('test/expected/algorithm_diagonal.css');
+    test.equal(actual, expected, 'should generate and replace the correct css properties.');
+
+    test.done();
   }
 
 };

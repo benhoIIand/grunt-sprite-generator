@@ -87,6 +87,8 @@ module.exports = function(grunt) {
                         encoding: 'binary'
                     });
 
+                   grunt.log.writeln('Sprite', dest, 'has been created');
+
                     var tmpResult = result.coordinates;
                     var coords = [];
 
@@ -102,17 +104,15 @@ module.exports = function(grunt) {
             });
         };
 
-        var updateReferences = function(filepath, spritePath, arr, callback) {
+        var updateReferences = function(filepath, spritePath, arr) {
             var data = grunt.file.read(filepath);
 
             arr.forEach(function(obj) {
-                var newRef = 'background-image: url(\''+ spritePath +'\');\n    background-position: -'+ obj.coords.x +'px -'+ obj.coords.y +'px;';
-                data = data.replace(obj.ref, newRef);
+                data = data.replace(obj.ref, 'background-image: url(\''+ spritePath +'\');\n    background-position: -'+ obj.coords.x +'px -'+ obj.coords.y +'px;');
             });
 
             grunt.file.write(filepath, data);
-
-            // callback();
+            grunt.log.writeln('File', filepath, 'has been updated');
         };
 
 
