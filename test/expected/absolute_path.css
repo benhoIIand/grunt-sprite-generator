@@ -1,0 +1,20 @@
+.icon-facebook {
+	width: 32px;
+	height: 32px;
+    background-image: url('/tmp/absolute_path.png');
+    background-position: -0px -66px;
+}
+
+.icon-twitter {
+	width: 36px;
+	height: 36px;
+    background-image: url('/tmp/absolute_path.png');
+    background-position: -66px -0px;
+}
+
+.icon-square {
+	width: 64px;
+	height: 64px;
+    background-image: url('/tmp/absolute_path.png');
+    background-position: -0px -0px;
+}

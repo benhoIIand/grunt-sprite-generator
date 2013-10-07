@@ -41,6 +41,12 @@ module.exports = function(grunt) {
                     '/tmp/default_options.png': ['tmp/default_options.css']
                 }
             },
+            absolute_path: {
+                options: {},
+                files: {
+                    '/tmp/absolute_path.png': ['tmp/absolute_path.css']
+                }
+            },
             multiple_imports: {
                 options: {},
                 files: {

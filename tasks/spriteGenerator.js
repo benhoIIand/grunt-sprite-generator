@@ -6,6 +6,7 @@
  * Licensed under the MIT license.
  */
 
+var path 		= require('path');
 var spritesmith = require('spritesmith');
 
 module.exports = function(grunt) {
@@ -50,7 +51,14 @@ module.exports = function(grunt) {
                         return false;
                     }
 
-                    var filepath = options.baseUrl + file.match(filepathRegex)[0].replace(/['"]/g, '');
+                    var filepath;
+                    var imagePath = file.match(filepathRegex)[0].replace(/['"]/g, '');
+
+                    if(imagePath[0] === '/') {
+                    	filepath = options.baseUrl + imagePath;
+                    } else {
+                    	filepath = path.resolve(srcFile.substring(0, srcFile.lastIndexOf("/")), imagePath);
+                    }
 
                     if (grunt.file.exists(filepath)) {
                         images[filepath] = file;

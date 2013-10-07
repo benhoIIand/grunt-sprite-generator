@@ -45,6 +45,22 @@ exports.spriteGenerator = {
     test.done();
   },
 
+  absolute_path: function(test) {
+    test.expect(2);
+
+    var actual, expected;
+
+    actual = grunt.file.read('tmp/absolute_path.png');
+    expected = grunt.file.read('test/expected/absolute_path.png');
+    test.equal(actual, expected, 'should generate a sprite with absolute paths.');
+
+    actual = grunt.file.read('tmp/absolute_path.css');
+    expected = grunt.file.read('test/expected/absolute_path.css');
+    test.equal(actual, expected, 'should generate and replace the correct css properties.');
+
+    test.done();
+  },
+
   multiple_imports: function(test) {
     test.expect(3);
 
@@ -52,7 +68,7 @@ exports.spriteGenerator = {
 
     actual = grunt.file.read('tmp/multiple_imports.png');
     expected = grunt.file.read('test/expected/multiple_imports.png');
-    test.equal(actual, expected, 'should generate a sprite from the default options.');
+    test.equal(actual, expected, 'should generate a sprite from multiple imports.');
 
     actual = grunt.file.read('tmp/multiple_imports_1.css');
     expected = grunt.file.read('test/expected/multiple_imports_1.css');
@@ -72,7 +88,7 @@ exports.spriteGenerator = {
 
     actual = grunt.file.read('tmp/algorithm_diagonal.png');
     expected = grunt.file.read('test/expected/algorithm_diagonal.png');
-    test.equal(actual, expected, 'should generate a sprite from the default options.');
+    test.equal(actual, expected, 'should generate a sprite with a chosen algorithm.');
 
     actual = grunt.file.read('tmp/algorithm_diagonal.css');
     expected = grunt.file.read('test/expected/algorithm_diagonal.css');
