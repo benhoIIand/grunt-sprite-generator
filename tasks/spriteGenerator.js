@@ -150,7 +150,7 @@ module.exports = function(grunt) {
                 return false;
             }
 
-            grunt.util.async.map([{
+            grunt.util.async.mapSeries([{
                 src: grunt.util._.keys(collection)
             }], spriteSmithWrapper, function(err, results) {
                 if (err) {
