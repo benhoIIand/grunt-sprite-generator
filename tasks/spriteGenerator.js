@@ -125,6 +125,12 @@ module.exports = function(grunt) {
 
         this.files.forEach(function(file) {
             var fileDest = file.dest;
+
+            // Basic cache busting
+            for(var prop in options) {
+                fileDest = fileDest.replace(new RegExp('{'+ prop +'}','g'), options[prop]);
+            }
+
             options.dest = options.baseUrl + fileDest;
 
             if(file.src.length < 1) {
