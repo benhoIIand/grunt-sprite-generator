@@ -37,35 +37,38 @@ module.exports = function(grunt) {
                 var data = grunt.file.read(options.baseUrl + srcFile);
                 var references = data.match(imageRegex);
 
-                references.forEach(function(file) {
-                    // Exit if it contains a http/https
-                    if (httpRegex.test(file)) {
-                        grunt.verbose.warn(file + ' has been skipped as it\'s an external resource!');
-                        return false;
-                    }
-
-                    // Exit if not a PNG
-                    if (!/\.png/.test(file)) {
-                        grunt.verbose.warn(file + ' has been skipped as it\'s not a PNG!');
-                        return false;
-                    }
-
-                    var filepath;
-                    var imagePath = file.match(filepathRegex)[0].replace(/['"]/g, '');
-
-                    if(imagePath[0] === '/') {
-                    	filepath = options.baseUrl + imagePath;
-                    } else {
-                    	filepath = path.resolve(srcFile.substring(0, srcFile.lastIndexOf("/")), imagePath);
-                    }
-
-                    if (grunt.file.exists(filepath)) {
-                        images[filepath] = file;
-                        found = true;
-                    } else {
-                        grunt.verbose.warn(filepath + ' has been skipped as it does not exist!');
-                    }
-                });
+                // If references are found
+                if (references) {
+                    references.forEach(function(file) {
+                        // Exit if it contains a http/https
+                        if (httpRegex.test(file)) {
+                            grunt.verbose.warn(file + ' has been skipped as it\'s an external resource!');
+                            return false;
+                        }
+    
+                        // Exit if not a PNG
+                        if (!/\.png/.test(file)) {
+                            grunt.verbose.warn(file + ' has been skipped as it\'s not a PNG!');
+                            return false;
+                        }
+    
+                        var filepath;
+                        var imagePath = file.match(filepathRegex)[0].replace(/['"]/g, '');
+    
+                        if(imagePath[0] === '/') {
+                        	filepath = options.baseUrl + imagePath;
+                        } else {
+                        	filepath = path.resolve(srcFile.substring(0, srcFile.lastIndexOf("/")), imagePath);
+                        }
+    
+                        if (grunt.file.exists(filepath)) {
+                            images[filepath] = file;
+                            found = true;
+                        } else {
+                            grunt.verbose.warn(filepath + ' has been skipped as it does not exist!');
+                        }
+                    });
+                }
             });
 
             return found ? images : found;
