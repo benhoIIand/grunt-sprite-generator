@@ -36,7 +36,6 @@ module.exports = function(grunt) {
             files.forEach(function(srcFile) {
                 var data = grunt.file.read(options.baseUrl + srcFile);
                 var references = data.match(imageRegex);
-                console.log('references', references);
 
                 // If references are found
                 if (references) {
@@ -65,14 +64,11 @@ module.exports = function(grunt) {
                         
                         filepath = filepath.replace(/\?.*/, '');
                         
-                        console.log('filepath', filepath);
     
                         if (grunt.file.exists(filepath)) {
-                        	console.log('In if')
                             images[filepath] = file;
                             found = true;
                         } else {
-                        	console.log('In else')
                             grunt.verbose.warn(filepath + ' has been skipped as it does not exist!');
                         }
                     });
@@ -145,7 +141,6 @@ module.exports = function(grunt) {
 			}
 			
             arr.forEach(function(obj) {
-            	console.log('obj.ref : ', obj.ref);
             	if(obj.ref.indexOf('sprite=y')===-1){
             		var replaceRegEx = new RegExp(escapeRegExp(obj.ref), "g");
             		data = data.replace(replaceRegEx, 'background-image: url(\''+ spritePathToWrite +'?sprite=y\');\n    background-position: -'+ obj.coords.x +'px -'+ obj.coords.y +'px;');
