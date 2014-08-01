@@ -116,24 +116,21 @@ module.exports = function(grunt) {
 
         var updateReferences = function(filepath, spritePath, arr) {
             var data = grunt.file.read(filepath);
-
-             var data = grunt.file.read(filepath);
-
-			var filePathParts = filepath.split('/');
-			var spritePathParts = spritePath.split('/');
-			var spritePathToWrite = ".";
-			var j = 0;
-			for (var i = 0; i < filePathParts.length-1; i++) {
-				if(filePathParts[i] && spritePathParts[i] && filePathParts[i]==spritePathParts[i]){
-					j = i+1;
-				} else {
-					spritePathToWrite += "/.."
-				}
-			}
-			
-			for(;j<spritePathParts.length;j++){
-				spritePathToWrite+= "/" + spritePathParts[j];
-			}
+	    var filePathParts = filepath.split('/');
+	    var spritePathParts = spritePath.split('/');
+	    var spritePathToWrite = ".";
+	    var j = 0;
+	    for (var i = 0; i < filePathParts.length-1; i++) {
+		if(filePathParts[i] && spritePathParts[i] && filePathParts[i]==spritePathParts[i]){
+		    j = i+1;
+		} else {
+		    spritePathToWrite += "/.."
+		}
+	    }
+	
+	    for(;j<spritePathParts.length;j++){
+		spritePathToWrite+= "/" + spritePathParts[j];
+	    }
 			
             arr.forEach(function(obj) {
                 data = data.replace(obj.ref, 'background-image: url(\''+ spritePathToWrite +'\');\n    background-position: -'+ obj.coords.x +'px -'+ obj.coords.y +'px;');
