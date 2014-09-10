@@ -32,8 +32,8 @@ grunt.initConfig({
     },
     your_target: {
       // Target-specific file lists and/or options go here.
-    },
-  },
+    }
+  }
 })
 ```
 
@@ -60,10 +60,12 @@ In this example, the default options are used to do something with whatever. So 
 grunt.initConfig({
   spriteGenerator: {
     options: {},
-    files: {
-      'dest/default_options.png': ['src/default_options.css']
-    },
-  },
+    default_task: {
+      files: {
+        'dest/default_options.png': ['src/default_options.css']
+      }
+    }
+  }
 })
 ```
 
@@ -77,10 +79,12 @@ grunt.initConfig({
       algorithm: 'binary-tree',
       padding: 10
     },
-    files: {
-      'dest/default_options.png': ['src/default_options.css']
-    },
-  },
+    default_task: {
+      files: {
+        'dest/default_options.png': ['src/default_options.css']
+      }
+    }
+  }
 })
 ```
 
