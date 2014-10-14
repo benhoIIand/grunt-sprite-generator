@@ -118,7 +118,10 @@ module.exports = function(grunt) {
             var data = grunt.file.read(filepath);
 
             arr.forEach(function(obj) {
-                spritePath = spritePath.replace(options.endUrlPatternToReplace, options.endUrlPatternReplacer);
+                if (typeof options.endUrlPatternToReplace === 'string' &&
+                        typeof options.endUrlPatternReplacer === 'string') {
+                    spritePath = spritePath.replace(options.endUrlPatternToReplace, options.endUrlPatternReplacer);
+                }
                 data = data.replace(obj.ref, 'background-image: url(\''+ spritePath +'\');\n    background-position: -'+ obj.coords.x +'px -'+ obj.coords.y +'px;');
             });
 
