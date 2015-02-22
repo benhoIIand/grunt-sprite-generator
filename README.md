@@ -1,5 +1,7 @@
 # grunt-sprite-generator [![Build Status](https://travis-ci.org/hollandben/grunt-sprite-generator.png?branch=master)](https://travis-ci.org/hollandben/grunt-sprite-generator)
 
+## This is no longer maintained
+
 > Grunt task that generates a sprite from images referenced in a stylesheet and then updates the references with the new sprite image and positions
 
 If you spot any problems or have questions, then please open a new issue :)
