@@ -13,7 +13,7 @@ module.exports = function(grunt) {
     'use strict';
 
     var httpRegex = new RegExp('http[s]?', 'ig');
-    var imageRegex = new RegExp('background-image:[\\s]?url\\(["\']?([\\w\\d\\s!:./\\-\\_]*\\.[\\w?#]+)["\']?\\)[^;]*\;', 'ig');
+    var imageRegex = new RegExp('background-image:[\\s]?url\\(["\']?([\\w\\d\\s!:./\\-\\_]*\\.[\\w?#]+)["\']?\\?*\w*.*\w*\\)[^;]*\;', 'ig');
     var filepathRegex = new RegExp('["\']?([\\w\\d\\s!:./\\-\\_]*\\.[\\w?#]+)["\']?', 'ig');
 
     grunt.registerMultiTask('spriteGenerator', 'Grunt task that generates a sprite from images referenced in a stylesheet and then updates the references with the new sprite image and positions', function() {
@@ -47,10 +47,11 @@ module.exports = function(grunt) {
                         }
     
                         // Exit if not a PNG
-                        if (!/\.png/.test(file)) {
+                        if (!/\.png.*/.test(file)) {
                             grunt.verbose.warn(file + ' has been skipped as it\'s not a PNG!');
                             return false;
                         }
+                        
     
                         var filepath;
                         var imagePath = file.match(filepathRegex)[0].replace(/['"]/g, '');
@@ -60,6 +61,9 @@ module.exports = function(grunt) {
                         } else {
                         	filepath = path.resolve(srcFile.substring(0, srcFile.lastIndexOf("/")), imagePath);
                         }
+                        
+                        filepath = filepath.replace(/\?.*/, '');
+                        
     
                         if (grunt.file.exists(filepath)) {
                             images[filepath] = file;
@@ -114,11 +118,33 @@ module.exports = function(grunt) {
             });
         };
 
+        function escapeRegExp(string) {
+		    return string.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, "\\$1");
+		}
         var updateReferences = function(filepath, spritePath, arr) {
             var data = grunt.file.read(filepath);
 
+			var filePathParts = filepath.split('/');
+			var spritePathParts = spritePath.split('/');
+			var spritePathToWrite = ".";
+			var j = 0;
+			for (var i = 0; i < filePathParts.length-1; i++) {
+				if(filePathParts[i] && spritePathParts[i] && filePathParts[i]==spritePathParts[i]){
+					j = i+1;
+				} else {
+					spritePathToWrite += "/.."
+				}
+			}
+			
+			for(;j<spritePathParts.length;j++){
+				spritePathToWrite+= "/" + spritePathParts[j];
+			}
+			
             arr.forEach(function(obj) {
-                data = data.replace(obj.ref, 'background-image: url(\''+ spritePath +'\');\n    background-position: -'+ obj.coords.x +'px -'+ obj.coords.y +'px;');
+            	if(obj.ref.indexOf('sprite=y')===-1){
+            		var replaceRegEx = new RegExp(escapeRegExp(obj.ref), "g");
+            		data = data.replace(replaceRegEx, 'background-image: url(\''+ spritePathToWrite +'?sprite=y\');\n    background-position: -'+ obj.coords.x +'px -'+ obj.coords.y +'px;');
+            	}
             });
 
             grunt.file.write(filepath, data);
