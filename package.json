@@ -18,7 +18,7 @@
   },
   "main": "tasks/grunt-sprite-generator.js",
   "dependencies": {
-    "spritesmith": "0.10.0"
+    "spritesmith": "^1.3.1"
   },
   "devDependencies": {
     "grunt": ">=0.4.1",
